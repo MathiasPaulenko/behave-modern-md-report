@@ -7,6 +7,22 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## [Unreleased]
 
+## [1.1.0] - 2026-06-29
+
+### Added
+
+- Features in the Scenario Details section are now collapsible (`<details>` blocks), grouping scenarios per feature.
+
+### Changed
+
+- `examples/report.md` is now tracked in Git so the README example link works on GitHub.
+
+### Fixed
+
+- Markdown spacing around horizontal rules, headings, tables, and `<details>` blocks so the report renders correctly in all Markdown viewers.
+- Missing blank lines before the "CI / Environment Variables" heading.
+- Warning status icon (`⚠️`) now uses the emoji variant for consistent rendering with other status icons.
+
 ## [1.0.0] - 2026-06-29
 
 ### Added

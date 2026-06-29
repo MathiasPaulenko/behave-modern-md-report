@@ -4,7 +4,7 @@ build-backend = "hatchling.build"
 
 [project]
 name = "behave-modern-md-report"
-version = "1.0.0"
+version = "1.1.0"
 description = "A modern, readable, CI/CD-friendly Markdown report formatter for Behave."
 readme = "README.md"
 license = { text = "MIT" }
