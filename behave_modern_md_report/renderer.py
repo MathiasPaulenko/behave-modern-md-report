@@ -388,6 +388,7 @@ class MarkdownRenderer:
                     continue
                 self._render_scenario(content, scenario)
             md.details(summary=summary, content_lines=content.lines, open_=False)
+        md.horizontal_rule()
 
     def _render_scenario(self, md: MarkdownBuilder, scenario: Scenario) -> None:
         summary = f"{_status_icon(scenario.status)} Scenario: {scenario.name}"
