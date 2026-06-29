@@ -164,6 +164,32 @@ jobs:
     permissions:
       contents: write
     steps:
+      - uses: actions/checkout@v4
+        with:
+          fetch-depth: 0
+          ref: ${{ needs.detect.outputs.tag }}
+
+      - name: Extract release notes from CHANGELOG.md
+        id: changelog
+        run: |
+          python - <<'PY'
+          import pathlib, re, os
+          version = os.environ["VERSION"].lstrip("v")
+          text = pathlib.Path("CHANGELOG.md").read_text(encoding="utf-8")
+          pattern = rf"## \[{re.escape(version)}\].*?(?=\n## \[|\Z)"
+          match = re.search(pattern, text, re.DOTALL)
+          if not match:
+              raise SystemExit(f"No CHANGELOG entry found for version {version}")
+          body = match.group(0).strip()
+          # Write multiline output for GitHub Actions
+          with open(os.environ["GITHUB_OUTPUT"], "a", encoding="utf-8") as f:
+              f.write("body<<EOF\n")
+              f.write(body)
+              f.write("\nEOF\n")
+          PY
+        env:
+          VERSION: ${{ needs.detect.outputs.version }}
+
       - uses: actions/download-artifact@v4
         with:
           name: dist
@@ -174,5 +200,6 @@ jobs:
         with:
           tag_name: ${{ needs.detect.outputs.tag }}
           name: ${{ needs.detect.outputs.tag }}
-          generate_release_notes: true
+          body: ${{ steps.changelog.outputs.body }}
+          generate_release_notes: false
           files: dist/*
