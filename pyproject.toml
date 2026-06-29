@@ -1,0 +1,96 @@
+[build-system]
+requires = ["hatchling"]
+build-backend = "hatchling.build"
+
+[project]
+name = "behave-modern-md-report"
+version = "1.0.0"
+description = "A modern, readable, CI/CD-friendly Markdown report formatter for Behave."
+readme = "README.md"
+license = { text = "MIT" }
+authors = [
+    { name = "Open Source Contributors" },
+]
+requires-python = ">=3.11"
+keywords = [
+    "behave",
+    "bdd",
+    "report",
+    "markdown",
+    "github",
+    "cicd",
+    "testing",
+]
+classifiers = [
+    "Development Status :: 4 - Beta",
+    "Intended Audience :: Developers",
+    "License :: OSI Approved :: MIT License",
+    "Programming Language :: Python :: 3",
+    "Programming Language :: Python :: 3.11",
+    "Programming Language :: Python :: 3.12",
+    "Programming Language :: Python :: 3.13",
+    "Topic :: Software Development :: Testing",
+    "Topic :: Software Development :: Testing :: BDD",
+]
+dependencies = [
+    "behave>=1.2.6",
+]
+
+[project.optional-dependencies]
+dev = [
+    "pytest>=7.0",
+    "pytest-cov>=4.0",
+    "ruff>=0.4.0",
+    "mypy>=1.0",
+]
+
+[project.urls]
+Homepage = "https://github.com/MathiasPaulenko/behave-modern-md-report"
+Documentation = "https://github.com/MathiasPaulenko/behave-modern-md-report/blob/main/README.md"
+Repository = "https://github.com/MathiasPaulenko/behave-modern-md-report"
+Issues = "https://github.com/MathiasPaulenko/behave-modern-md-report/issues"
+
+[project.entry-points."behave.formatters"]
+markdown = "behave_modern_md_report.formatter:BehaveMarkdownFormatter"
+
+[tool.hatch.build.targets.wheel]
+packages = ["behave_modern_md_report"]
+
+[tool.hatch.build]
+include = [
+    "behave_modern_md_report/**/*.py",
+]
+
+[tool.pytest.ini_options]
+testpaths = ["tests"]
+pythonpath = ["."]
+addopts = "--cov=behave_modern_md_report --cov-report=term-missing --cov-report=xml --cov-report=html"
+
+[tool.ruff]
+target-version = "py311"
+line-length = 120
+
+[tool.ruff.lint]
+select = [
+    "E",
+    "F",
+    "I",
+    "W",
+    "UP",
+    "B",
+    "C4",
+    "SIM",
+]
+ignore = [
+    "E501",
+]
+
+[tool.ruff.lint.isort]
+known-first-party = ["behave_modern_md_report"]
+
+[tool.mypy]
+python_version = "3.11"
+strict = true
+warn_return_any = true
+warn_unused_ignores = true
+ignore_missing_imports = true
