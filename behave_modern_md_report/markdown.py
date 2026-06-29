@@ -21,9 +21,14 @@ class MarkdownBuilder:
         self.lines.append(content)
         return self
 
+    def _ensure_blank(self) -> None:
+        """Add a single blank line if the last line is not blank."""
+        if self.lines and self.lines[-1] != "":
+            self.lines.append("")
+
     def blank(self) -> MarkdownBuilder:
-        """Append a blank line."""
-        self.lines.append("")
+        """Append a blank line, avoiding consecutive blanks."""
+        self._ensure_blank()
         return self
 
     def heading(self, level: int, text: str) -> MarkdownBuilder:
@@ -33,6 +38,7 @@ class MarkdownBuilder:
 
     def paragraph(self, text: str) -> MarkdownBuilder:
         """Append a paragraph."""
+        self._ensure_blank()
         self.lines.append(text)
         self.lines.append("")
         return self
@@ -61,6 +67,7 @@ class MarkdownBuilder:
         """Append a blockquote."""
         if isinstance(text, list):
             text = "\n".join(text)
+        self._ensure_blank()
         for line in text.splitlines():
             self.lines.append(f"> {line}")
         self.lines.append("")
@@ -68,7 +75,7 @@ class MarkdownBuilder:
 
     def horizontal_rule(self) -> MarkdownBuilder:
         """Append a horizontal rule with blank lines before and after."""
-        self.lines.append("")
+        self._ensure_blank()
         self.lines.append("---")
         self.lines.append("")
         return self
@@ -98,6 +105,7 @@ class MarkdownBuilder:
         for row in rows:
             padded = row + [""] * (len(headers) - len(row))
             self.lines.append(_row(padded))
+        self.lines.append("")
         return self
 
     def task_list(self, items: list[tuple[str, bool]]) -> MarkdownBuilder:
@@ -143,14 +151,16 @@ class MarkdownBuilder:
         only place where we intentionally use HTML.
 
         """
+        self._ensure_blank()
         open_attr = " open" if open_ else ""
         self.lines.append(f"<details{open_attr}>")
         self.lines.append(f"<summary>{summary}</summary>")
         self.lines.append("")
         for line in content_lines:
             self.lines.append(line)
-        self.lines.append("")
+        self._ensure_blank()
         self.lines.append("</details>")
+        self._ensure_blank()
         return self
 
     def escape(self, text: str) -> str:

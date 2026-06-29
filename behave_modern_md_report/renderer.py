@@ -485,6 +485,7 @@ class MarkdownRenderer:
             rows.append(["Git remote", env.git_remote])
         md.table(headers, rows)
         if env.env_vars:
+            md.blank()
             md.heading(3, "CI / Environment Variables")
             var_headers = ["Variable", "Value"]
             var_rows = [[k, safe_str(v)] for k, v in sorted(env.env_vars.items())]
