@@ -80,7 +80,7 @@ _STATUS_ICONS = {
     STATUS_PASSED: "✅",
     STATUS_FAILED: "❌",
     STATUS_SKIPPED: "⏭",
-    STATUS_UNDEFINED: "⚠",
+    STATUS_UNDEFINED: "⚠️",
     STATUS_PENDING: "🚧",
     "untested": "⚪",
     "error": "❌",
