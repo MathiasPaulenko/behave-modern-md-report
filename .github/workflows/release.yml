@@ -12,9 +12,10 @@ name: Release
 #      (nothing to do, no release).
 #   3. Otherwise: creates and pushes the tag, builds sdist + wheel,
 #      publishes to PyPI via Trusted Publishing, and creates a GitHub Release
-#      with auto-generated notes.
+#      with the matching CHANGELOG.md section.
 #
 # To cut a new release: bump `version` in pyproject.toml, commit, push. Done.
+# Manual tags also trigger this workflow so releases can be recreated.
 
 on:
   push:
