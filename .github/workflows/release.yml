@@ -19,6 +19,8 @@ name: Release
 on:
   push:
     branches: [main]
+    tags:
+      - "v*"
     paths:
       - "pyproject.toml"
       - "behave_modern_md_report/**"
