@@ -32,8 +32,10 @@ class MarkdownBuilder:
         return self
 
     def heading(self, level: int, text: str) -> MarkdownBuilder:
-        """Append a Markdown heading."""
+        """Append a Markdown heading with blank lines before and after."""
+        self._ensure_blank()
         self.lines.append(f"{'#' * level} {text}")
+        self.lines.append("")
         return self
 
     def paragraph(self, text: str) -> MarkdownBuilder:

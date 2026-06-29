@@ -8,7 +8,7 @@ from behave_modern_md_report.markdown import MarkdownBuilder, markdown_table
 def test_heading():
     md = MarkdownBuilder()
     md.heading(1, "Title")
-    assert md.lines == ["# Title"]
+    assert md.lines == ["# Title", ""]
 
 
 def test_table_basic():
