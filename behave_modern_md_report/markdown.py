@@ -67,8 +67,10 @@ class MarkdownBuilder:
         return self
 
     def horizontal_rule(self) -> MarkdownBuilder:
-        """Append a horizontal rule."""
+        """Append a horizontal rule with blank lines before and after."""
+        self.lines.append("")
         self.lines.append("---")
+        self.lines.append("")
         return self
 
     def table(self, headers: list[str], rows: list[list[str]]) -> MarkdownBuilder:
