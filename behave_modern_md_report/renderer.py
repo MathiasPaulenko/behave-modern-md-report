@@ -376,17 +376,18 @@ class MarkdownRenderer:
         md.heading(2, "Scenario Details")
         md.blank()
         for feature in execution.features:
-            md.heading(3, f"Feature: {feature.name}")
+            summary = f"Feature: {feature.name}"
+            content = MarkdownBuilder()
             if feature.description:
-                md.blockquote(feature.description)
+                content.blockquote(feature.description)
             if feature.tags:
-                md.paragraph("Tags: " + " ".join(f"`{t}`" for t in feature.tags))
-            md.heading(4, md.link(feature.name, f"feature-{feature.unique_id}"))
+                content.paragraph("Tags: " + " ".join(f"`{t}`" for t in feature.tags))
+            content.heading(4, md.link(feature.name, f"feature-{feature.unique_id}"))
             for scenario in feature.scenarios:
                 if not self._should_show_scenario(scenario):
                     continue
-                self._render_scenario(md, scenario)
-            md.horizontal_rule()
+                self._render_scenario(content, scenario)
+            md.details(summary=summary, content_lines=content.lines, open_=False)
 
     def _render_scenario(self, md: MarkdownBuilder, scenario: Scenario) -> None:
         summary = f"{_status_icon(scenario.status)} Scenario: {scenario.name}"
