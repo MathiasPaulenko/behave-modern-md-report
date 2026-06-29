@@ -61,7 +61,7 @@ venv/
 *.swo
 
 # Project specific
-report.md
+/report.md
 examples/behave_project/report.md
 examples/behave_project/summary.json
 examples/demo_generator/demo-report.md
