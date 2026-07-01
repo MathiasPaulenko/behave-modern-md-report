@@ -10,6 +10,7 @@ A modern, readable, CI/CD-friendly Markdown report formatter for the [Behave](ht
 It generates a single `report.md` that you can publish directly to GitHub, GitHub Actions Summaries, GitLab, Azure DevOps, Jenkins, Bitbucket, wikis, or any Markdown viewer.
 
 See a generated example report at [`examples/report.md`](examples/report.md).
+See a generated step catalog at [`examples/step_catalog.md`](examples/step_catalog.md).
 
 ## Table of Contents
 
@@ -169,10 +170,11 @@ See [docs/attachments.md](docs/attachments.md) for the full attachment API and s
 
 ## Examples
 
-The repository includes two examples:
+The repository includes three examples:
 
 - `examples/behave_project/` — a complete Behave project that exercises all report sections.
 - `examples/demo_generator/` — a script that generates a synthetic `demo-report.md` without running Behave.
+- `examples/step_catalog.md` — a generated step catalog showing all step definitions, patterns, parameters, and source code.
 
 Run the example project:
 
@@ -207,6 +209,21 @@ A generated report contains the following sections in order:
 
 Each section is linked from the table of contents. Scenario details are wrapped in collapsible `<details>` blocks so the report stays readable even for large suites.
 
+### Step catalog layout
+
+The step catalog (`stepcatalog` formatter) produces:
+
+```markdown
+# 📋 Step Catalog
+
+## Statistics
+## Steps by Keyword
+## Steps by File
+## Step Definitions
+```
+
+Each step definition is wrapped in a collapsible `<details>` block showing its keyword, pattern, function name, location, parameters, docstring, and source code.
+
 ## Architecture
 
 Behave Markdown Report uses a clean, layered architecture:
@@ -219,6 +236,8 @@ Behave Markdown Report uses a clean, layered architecture:
 | Statistics | `statistics.py` | Computes aggregates and derived metrics. |
 | Renderer | `renderer.py` | Turns the `Execution` model into Markdown. |
 | Markdown | `markdown.py` | Low-level Markdown document helpers. |
+| Step Scanner | `step_scanner.py` | AST-based static analysis of step definitions. |
+| Step Catalog | `step_catalog_formatter.py` | Renders step catalog Markdown from scanned definitions. |
 | Attach API | `attach.py` | Convenience helpers for `environment.py`. |
 
 See [docs/architecture.md](docs/architecture.md) for the full architecture and data flow.
