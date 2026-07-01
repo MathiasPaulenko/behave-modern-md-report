@@ -44,6 +44,7 @@ See a generated example report at [`examples/report.md`](examples/report.md).
 - **Slowest scenarios** top-10 list.
 - **Scenario details** with collapsible sections, Gherkin backgrounds, data tables, and doc strings.
 - **Environment section** with Python, Behave, OS, Git, and CI environment details.
+- **Step catalog** formatter that statically analyses `features/steps/` and produces a Markdown catalog with patterns, parameters, docstrings, source code, and statistics.
 - **Attachments** rendered inline: images, JSON, XML, HTML, logs, and plain text.
 - **No heavy dependencies** — only the Python standard library and `behave`.
 
@@ -71,6 +72,8 @@ pip install -e ".[dev]"
 
 ## Quick start
 
+### Markdown report
+
 1. Create or update `behave.ini` in your Behave project root:
 
 ```ini
@@ -96,6 +99,33 @@ If you prefer not to register the short name, use the full formatter path:
 behave -f behave_modern_md_report.formatter:BehaveMarkdownFormatter -o report.md
 ```
 
+### Step catalog
+
+1. Register the formatter in `behave.ini`:
+
+```ini
+[behave.formatters]
+stepcatalog = behave_modern_md_report.step_catalog_formatter:StepCatalogMarkdownFormatter
+```
+
+2. Run Behave with the `stepcatalog` formatter:
+
+```bash
+behave -f stepcatalog -o step_catalog.md --no-skipped
+```
+
+3. Open `step_catalog.md` — it contains a table of all step definitions, their patterns, parameters, docstrings, source code, and aggregate statistics.
+
+You can also combine both formatters in a single run:
+
+```ini
+[behave]
+format = markdown
+    stepcatalog
+outfiles = report.md
+    step_catalog.md
+```
+
 ## Configuration
 
 All options are passed through Behave's `userdata` mechanism. Add a `[behave.userdata]` section to `behave.ini`:
@@ -111,6 +141,7 @@ bmr.include_traceback = true
 bmr.include_environment = true
 bmr.sort_failed_first = true
 bmr.max_traceback_lines = 0
+bmr.steps_dir = features/steps
 ```
 
 You can also override options from the command line:
