@@ -7,11 +7,14 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## [Unreleased]
 
+## [1.2.0] - 2026-07-01
+
 ### Added
 
 - New `stepcatalog` formatter that statically analyses `features/steps/` and produces a Markdown step catalog with patterns, parameters, docstrings, source code, and aggregate statistics.
 - `StepCatalogMarkdownFormatter` exported from the public API.
 - `bmr.steps_dir` configuration option to customise the steps directory path.
+- `examples/step_catalog.md` example file tracked in Git.
 - 19 unit tests covering the step scanner and catalog renderer.
 
 ## [1.1.0] - 2026-06-29
